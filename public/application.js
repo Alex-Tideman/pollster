@@ -4,7 +4,6 @@ socket.on('connect', function () {
     console.log('You have connected!');
 });
 
-
 socket.on('message', function (message) {
     $('.messages').append(`[${message.username}]: ${message.text} <br>`);
 });
@@ -16,3 +15,4 @@ $('.send-message').click( function () {
         text: $('.message input[type=text]').val()
     });
 });
+
