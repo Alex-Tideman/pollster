@@ -1,4 +1,3 @@
-
 $('#add-response').click( function () {
     $('.responses').append('<div class="response"><input type="text" placeholder="Poll Response"></div>');
 });
@@ -16,7 +15,9 @@ function createPoll () {
     });
 
     var poll = { title: $('.title input[type=text]').val(),
-                 responses: pollResponses};
+                 responses: pollResponses,
+                 ending_time: $('.ending-time input[type=text]').val()
+                };
 
-    socket.send('polls:create', JSON.stringify(poll));
+    socket.send('poll', poll);
 }

@@ -4,18 +4,25 @@
     <title>Pollster</title>
   </head>
   <body>
-
     <section>
-      <a href="/new_poll">Create a New Poll</a>
+      <form action="/new-poll" method="post">
+        <input id="title" type="text" placeholder="Poll Title"><br>
+        <input id="response1" type="text" placeholder="Poll Response"><br>
+        <input id="response2" type="text" placeholder="Poll Response"><br>
+        <input id="response3" type="text" placeholder="Poll Response"><br>
+        <input id="ending-time" type="text" placeholder="Set Ending Time"><br>
+        <input type="submit" value="Create Poll">
+      </form>
+      <button id="add-response">Add another response</button><br><br>
     </section>
 
     <section class="polls">Polls</section>
 
 
     <script src="/jquery.js"></script>
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="/application.js"></script>
-    <script src="/new_poll.js"></script>
+    <!--<script src="/socket.io/socket.io.js"></script>-->
+    <!--<script src="/application.js"></script>-->
+    <!--<script src="/new_poll.js"></script>-->
 
   </body>
 </html>
