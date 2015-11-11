@@ -1,0 +1,13 @@
+<h1><%= poll.title %></h1>
+<form>
+    <input type="radio" name="response" value="<%= poll.response1 %>" class="response" checked><%= poll.response1 %>
+    <br>
+    <input type="radio" name="response" value="<%= poll.response2 %>" class="response"><%= poll.response2 %>
+    <br>
+    <input type="radio" name="response" value="<%= poll.response3 %>" class="response"><%= poll.response3 %>
+</form>
+
+<script src=".././jquery.js"></script>
+<script src=".././application.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src=".././poll.js"></script>
