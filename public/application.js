@@ -1,18 +1,6 @@
 var socket = io();
 
-socket.on('connect', function () {
-    console.log('You have connected!');
+socket.on('polls:create', function (channel,message) {
+    console.log(channel,message);
+    //$('.polls').append('<br><div class="poll-url">Admin Url</div><div class="share-url">Share Url</div>');
 });
-
-socket.on('message', function (message) {
-    $('.messages').append(`[${message.username}]: ${message.text} <br>`);
-});
-
-
-$('.send-message').click( function () {
-    socket.send('message', {
-        username: $('.username input[type=text]').val(),
-        text: $('.message input[type=text]').val()
-    });
-});
-

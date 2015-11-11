@@ -20,10 +20,10 @@ app.get('/new_poll', function (req, res) {
 io.on('connection', function (socket) {
   console.log('Someone has connected.');
 
-  socket.on('message', function (channel, message) {
+  socket.on('message', function (channel,message) {
     client.publish(channel, message);
+    //client.psubscribe("polls:*");
   });
-
 
   socket.on('disconnect', function () {
     // Something here later.
