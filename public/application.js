@@ -1,5 +1,5 @@
-$('#add-response').click( function () {
-    $('.responses').append('<div class="response"><input type="text" placeholder="Poll Response"></div>');
+$('#new-poll').click( function () {
+    $('.new-poll').append('<input type="text" placeholder="Poll Response"></div>');
 });
 
 //function createPoll () {

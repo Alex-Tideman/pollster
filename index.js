@@ -14,15 +14,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
 app.get('/', function (req, res) {
-  res.send(path.join(__dirname, '/public/index.html'));
+  path.join(__dirname, '/public/index.html')
 });
 
-app.get('/new-poll', function (req, res) {
-  res.send(path.join(__dirname, '/public/index.html'));
-});
 
 app.post('/new-poll', function (req, res) {
-  console.log(req.body);
+  res.send("Poll:" + req.body.title + "<br>Admin Url:<a href=" + md5(req.body.title) + "<br>Visitor Url:" + md5(req.body.response1));
 });
 
 

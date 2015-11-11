@@ -4,17 +4,15 @@
     <title>Pollster</title>
   </head>
   <body>
-    <section>
-      <form action="/new-poll" method="post">
-        <input id="title" type="text" placeholder="Poll Title"><br>
-        <input id="response1" type="text" placeholder="Poll Response"><br>
-        <input id="response2" type="text" placeholder="Poll Response"><br>
-        <input id="response3" type="text" placeholder="Poll Response"><br>
-        <input id="ending-time" type="text" placeholder="Set Ending Time"><br>
+      <form id="new-poll" action="/new-poll" method="post">
+        <input id="title" type="text" name="title" placeholder="Poll Title"><br>
+        <input id="response1" type="text" name="response1" placeholder="Poll Response"><br>
+        <input id="response2" type="text" name="response2" placeholder="Poll Response"><br>
+        <input id="response3" type="text" name="response3" placeholder="Poll Response"><br>
+        <input id="ending-time" type="text" name="endingTime" placeholder="Set Ending Time"><br>
         <input type="submit" value="Create Poll">
       </form>
       <button id="add-response">Add another response</button><br><br>
-    </section>
 
     <section class="polls">Polls</section>
 
