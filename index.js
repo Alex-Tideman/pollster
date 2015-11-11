@@ -22,7 +22,7 @@ io.on('connection', function (socket) {
 
   socket.on('message', function (channel,message) {
     client.publish(channel, message);
-    //client.psubscribe("polls:*");
+    io.sockets.emit(channel, message)
   });
 
   socket.on('disconnect', function () {
