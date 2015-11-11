@@ -9,19 +9,34 @@ const path = require('path');
 const md5 = require('md5');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static('views'));
+app.set('view engine', 'ejs');
 
 
-app.use(express.static('public'));
+const polls = {};
 
 app.get('/', function (req, res) {
-  path.join(__dirname, '/public/index.html')
+  res.render('pages/index');
+  //res.sendFile(path.join(__dirname, '/public/index.html'));
 });
 
+app.get('/poll/:id', function(req, res) {
+  res.render('pages/poll', {
+    poll: polls[req.params.id]
+  });
+});
+
+app.get('/admin/:id', function(req, res) {
+  res.render('pages/admin', {
+    poll: polls[req.params.id]
+  });
+});
 
 app.post('/new-poll', function (req, res) {
-  res.send("Poll:" + req.body.title + "<br>Admin Url:<a href=" + md5(req.body.title) + "<br>Visitor Url:" + md5(req.body.response1));
+  var id = md5(req.body.title);
+  polls[id] = req.body;
+  res.send("Title: " + req.body.title + "<br><a href=" + "/poll/" + id + ">Vistor Url</a><br><a href=" + "/admin/" + id + ">Admin Url</a>");
 });
-
 
 //const polls = {};
 //
