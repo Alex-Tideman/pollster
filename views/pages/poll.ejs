@@ -1,11 +1,15 @@
 <h1><%= poll.title %></h1>
-<form>
-    <input type="radio" name="response" value="<%= poll.response1 %>" class="response" checked><%= poll.response1 %>
-    <br>
-    <input type="radio" name="response" value="<%= poll.response2 %>" class="response"><%= poll.response2 %>
-    <br>
-    <input type="radio" name="response" value="<%= poll.response3 %>" class="response"><%= poll.response3 %>
-</form>
+
+<div id="connection-count"></div>
+<div id="status-message"></div>
+<div id="choices">
+    <button><%= poll.response1 %></button>
+    <button><%= poll.response2 %></button>
+    <button><%= poll.response3 %></button>
+</div>
+<div id="ending-time"><%= poll.endingTime %></div>
+<div id="vote-results"></div>
+<div id="vote-message"></div>
 
 <script src=".././jquery.js"></script>
 <script src=".././application.js"></script>
