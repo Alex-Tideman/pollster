@@ -1,19 +1,28 @@
-const http = require('http').Server(app);
+const http = require('http');
 const express = require('express');
 const _ = require('lodash');
 const app = express();
-const io = require('socket.io')(http);
 const redis = require('redis');
 const client = redis.createClient();
 const bodyParser = require('body-parser');
 const path = require('path');
 const md5 = require('md5');
 
+const port = process.env.PORT || 3000;
+
+const server = http.createServer(app)
+    .listen(port, function(){
+      console.log('Listening on port ' + port + '.');
+    });
+
+const socketIo = require('socket.io');
+const io = socketIo(server);
 app.use(express.static('views'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 
+var polls = {};
 var votes = {};
 
 app.get('/', function (req, res) {
@@ -21,7 +30,7 @@ app.get('/', function (req, res) {
 });
 
 app.get('/poll/:id', function(req, res) {
-  res.render('pages/poll');
+  res.render('pages/poll', { poll: polls[req.params.id]});
   //var poll = client.hgetall(req.params.id, function(err,dbset) {
   //  res.render('pages/poll',
   //      {poll: {title: dbset.title,
@@ -32,7 +41,7 @@ app.get('/poll/:id', function(req, res) {
 });
 
 app.get('/admin/:id', function(req, res) {
-  res.render('pages/admin')
+  res.render('pages/admin', { poll: polls[req.params.id]});
   //var poll = client.hgetall(req.params.id, function(err,dbset) {
   //  res.render('pages/admin',
   //      {poll: {title: dbset.title,
@@ -44,12 +53,13 @@ app.get('/admin/:id', function(req, res) {
 
 app.post('/new-poll', function (req, res) {
   var id = md5(req.body.title);
-  client.hset(id, "title", req.body.title);
-  client.hset(id, "response1", req.body.response1);
-  client.hset(id, "response2", req.body.response2);
-  client.hset(id, "response3", req.body.response3);
-  client.hset(id, "endingTime", req.body.endingTime);
+  polls[id] = req.body;
   res.send("Title: " + req.body.title + "<br><a href=" + "/poll/" + id + ">Vistor Url</a><br><a href=" + "/admin/" + id + ">Admin Url</a>");
+  //client.hset(id, "title", req.body.title);
+  //client.hset(id, "response1", req.body.response1);
+  //client.hset(id, "response2", req.body.response2);
+  //client.hset(id, "response3", req.body.response3);
+  //client.hset(id, "endingTime", req.body.endingTime);
 });
 
 io.on('connection', function (socket) {
@@ -58,7 +68,7 @@ io.on('connection', function (socket) {
   socket.emit('statusMessage', 'You have connected.');
 
   io.sockets.emit('usersConnected', io.engine.clientsCount);
-  io.sockets.emit('voteCount', countVotes(votes));
+  //io.sockets.emit('voteCount', countVotes(votes));
 
   socket.on('message', function (channel,message) {
     if (channel === 'voteCast') {
@@ -76,13 +86,9 @@ io.on('connection', function (socket) {
 });
 
 
-http.listen(process.env.PORT || 3000, function(){
-  console.log('Your server is up and running on Port 3000. Good job!');
-});
-
 function countVotes(votes) {
-  var voteCount = {
-  };
+
+  var voteCount = {};
 
   for (vote in votes) {
     voteCount[votes[vote]]++
@@ -96,3 +102,14 @@ function countVotes(votes) {
 
   return results;
 }
+
+//function setVotesToZero(polls) {
+//  var voteCount = {};
+//
+//  for (poll in polls) {
+//    voteCount[polls[poll]] = 0;
+//  }
+//
+//}
+
+module.exports = server;
