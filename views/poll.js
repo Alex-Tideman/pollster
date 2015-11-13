@@ -13,10 +13,11 @@ socket.on('statusMessage', function (message) {
 });
 
 var buttons = document.querySelectorAll('#choices button');
+var pollId = document.getElementById('poll-id');
 
 for (var i = 0; i < buttons.length; i++) {
     buttons[i].addEventListener('click', function () {
-        socket.send('voteCast', this.innerText);
+        socket.send('voteCast', [this.innerText,pollId.innerHTML]);
         socket.send('voteMessage', this.innerText);
     });
 }

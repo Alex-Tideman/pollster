@@ -23,14 +23,13 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 
 var polls = {};
-var votes = {};
 
 app.get('/', function (req, res) {
   res.render('pages/index');
 });
 
 app.get('/poll/:id', function(req, res) {
-  res.render('pages/poll', { poll: polls[req.params.id]});
+  res.render('pages/poll', { id: req.params.id, poll: polls[req.params.id]});
   //var poll = client.hgetall(req.params.id, function(err,dbset) {
   //  res.render('pages/poll',
   //      {poll: {title: dbset.title,
@@ -41,7 +40,7 @@ app.get('/poll/:id', function(req, res) {
 });
 
 app.get('/admin/:id', function(req, res) {
-  res.render('pages/admin', { poll: polls[req.params.id]});
+  res.render('pages/admin', { id: req.params.id, poll: polls[req.params.id] });
   //var poll = client.hgetall(req.params.id, function(err,dbset) {
   //  res.render('pages/admin',
   //      {poll: {title: dbset.title,
@@ -54,6 +53,7 @@ app.get('/admin/:id', function(req, res) {
 app.post('/new-poll', function (req, res) {
   var id = md5(req.body.title);
   polls[id] = req.body;
+  polls[id]["votes"] = {};
   res.send("Title: " + req.body.title + "<br><a href=" + "/poll/" + id + ">Vistor Url</a><br><a href=" + "/admin/" + id + ">Admin Url</a>");
   //client.hset(id, "title", req.body.title);
   //client.hset(id, "response1", req.body.response1);
@@ -72,23 +72,27 @@ io.on('connection', function (socket) {
 
   socket.on('message', function (channel,message) {
     if (channel === 'voteCast') {
-      votes[socket.id] = message;
+      var votes = polls[message[1]]['votes'];
+      votes[socket.id] = message[0];
       io.sockets.emit('voteCount', countVotes(votes));
-      socket.emit('voteMessage', message);
+      socket.emit('voteMessage', message[0]);
     }
   });
 
   socket.on('disconnect', function(){
     console.log('A user has disconnected.', io.engine.clientsCount);
-    socket.emit('voteCount', countVotes(votes));
     io.sockets.emit('userConnection', io.engine.clientsCount);
   });
 });
 
 
 function countVotes(votes) {
+  var voteCount = {
+  };
 
-  var voteCount = {};
+  for (vote in votes) {
+    voteCount[votes[vote]] = 0;
+  }
 
   for (vote in votes) {
     voteCount[votes[vote]]++
@@ -103,13 +107,5 @@ function countVotes(votes) {
   return results;
 }
 
-//function setVotesToZero(polls) {
-//  var voteCount = {};
-//
-//  for (poll in polls) {
-//    voteCount[polls[poll]] = 0;
-//  }
-//
-//}
 
 module.exports = server;
