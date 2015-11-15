@@ -71,15 +71,15 @@ io.on('connection', function (socket) {
   //io.sockets.emit('voteCount', countVotes(votes));
 
   socket.on('message', function (channel,message) {
-    if (channel === 'voteCast') {
+    if (channel === 'voteCast:' + message[1]) {
       var votes = polls[message[1]]['votes'];
       votes[socket.id] = message[0];
-      io.sockets.emit('voteCount', countVotes(votes));
+      io.sockets.emit('voteCount:' + message[1], countVotes(votes));
       socket.emit('voteMessage', message[0]);
     }
   });
 
-  socket.on('disconnect', function(){
+  socket.on('disconnect', function(channel,message){
     console.log('A user has disconnected.', io.engine.clientsCount);
     io.sockets.emit('userConnection', io.engine.clientsCount);
   });

@@ -17,14 +17,14 @@ var pollId = document.getElementById('poll-id');
 
 for (var i = 0; i < buttons.length; i++) {
     buttons[i].addEventListener('click', function () {
-        socket.send('voteCast', [this.innerText,pollId.innerHTML]);
+        socket.send('voteCast:' + pollId.innerHTML, [this.innerText,pollId.innerHTML]);
         socket.send('voteMessage', this.innerText);
     });
 }
 
 var results = document.querySelector('#vote-results');
 
-socket.on('voteCount', function (voteCount) {
+socket.on('voteCount:' + pollId.innerHTML, function (voteCount) {
     results.innerText = voteCount;
 });
 
