@@ -1,0 +1,61 @@
+/* Index */
+.poll-form {
+    margin-left:30%;
+    margin-right:30%;
+    padding:50px;
+    background:black;
+}
+
+.poll-form input{
+    font-size: 28px;
+}
+
+#title {
+    width:100%;
+    height:50px;
+    margin-bottom:5%;
+}
+
+.response {
+    width:100%;
+    height:50px;
+}
+
+#ending-time {
+    width:40%;
+    height:50px;
+    margin-top:5%;
+}
+
+/* Poll Page */
+#poll-id {
+    visibility: hidden;
+}
+
+.container {
+    margin-left:5%;
+    margin-right:5%;
+    padding:20px;
+    color:white;
+    background:black;
+}
+
+.container h4 {
+    float:right;
+    margin-top:-5%;
+}
+
+#choices button {
+    width:41%;
+    margin:4%;
+    height:50px;
+    font-size:20px;
+}
+
+#vote-results {
+    margin-left:5%;
+    margin-right:5%;
+    padding:20px;
+    color:white;
+    background:black;
+}

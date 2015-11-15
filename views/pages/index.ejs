@@ -2,21 +2,42 @@
 <html>
   <head>
     <title>Pollster</title>
+      <link rel="stylesheet" type="text/css" href=".././style.css" >
+      <link rel="stylesheet" type="text/css" href=".././timePicker.css">
   </head>
   <body>
+  <div class="poll-form">
       <form id="new-poll" action="/new-poll" method="post">
         <input id="title" type="text" name="title" placeholder="Poll Title"><br>
-        <input id="response1" type="text" name="response1" placeholder="Poll Response"><br>
-        <input id="response2" type="text" name="response2" placeholder="Poll Response"><br>
-        <input id="response3" type="text" name="response3" placeholder="Poll Response"><br>
-        <input id="ending-time" type="text" name="endingTime" placeholder="Set Ending Time"><br>
-        <input type="submit" value="Create Poll">
+        <input id="response1" class="response" type="text" name="response1" placeholder="Poll Response"><br>
+        <input id="response2" class="response" type="text" name="response2" placeholder="Poll Response"><br>
+        <input id="response3" class="response" type="text" name="response3" placeholder="Poll Response"><br>
+        <input id="response4" class="response" type="text" name="response4" placeholder="Poll Response"><br>
+        <input id="ending-time" class="time ui-timepicker-input" type="text" name="endingTime" placeholder="Poll Closes"><br>
+        <input id="submit" type="submit" value="Create Poll">
       </form>
       <button id="add-response">Add another response</button><br><br>
+  </div>
 
       <script src=".././jquery.js"></script>
       <script src="/socket.io/socket.io.js"></script>
       <script src=".././application.js"></script>
+      <script src="../timePicker.js"></script>
+      <script>
+          $("#ending-time").timepicker({
+              'minTime': roundMinutes(new Date()),
+              'maxTime': '10:00pm',
+              'showDuration': true,
+          });
 
+          function roundMinutes(date) {
+
+              date.setHours(date.getHours() + Math.round(date.getMinutes()/60));
+              date.setMinutes(0);
+
+              return date;
+          }
+
+      </script>
   </body>
 </html>
