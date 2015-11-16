@@ -1,6 +1,7 @@
 var socket = io();
 var pollId = document.getElementById('poll-id');
 var viewResults = document.getElementById('view-results');
+var voteEnd = document.getElementById('vote-end');
 var endVote = document.getElementById('end-vote');
 var endingTime = document.querySelector('#ending-time');
 var statusMessage = document.getElementById('status-message');
@@ -30,8 +31,7 @@ socket.on('voteCount:' + pollId.innerHTML, function (voteCount) {
     results.innerText = voteCount;
 });
 
-var voteMessage = document.querySelector('#vote-message');
 
-socket.on('voteMessage', function (message) {
-    voteMessage.innerText = "You voted: " + message;
+socket.on('endVote:' + pollId.innerHTML, function () {
+    voteEnd.innerText = "Poll ended";
 });
