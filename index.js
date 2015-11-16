@@ -86,6 +86,9 @@ io.on('connection', function (socket) {
         io.sockets.emit('voteCount:' + message[1], countVotes(votes));
         socket.emit('voteMessage', message[0]);
       }
+      else if (channel === 'endVote:' + message) {
+        io.sockets.emit('endVote:' + message);
+      }
      else if (channel === 'viewResults:' + message) {
       var votes = polls[message]['votes'];
       io.sockets.emit('voteCount:' + message, countVotes(votes));
@@ -113,7 +116,7 @@ function countVotes(votes) {
   var results = "";
 
   _.forOwn(voteCount, function(count,vote) {
-    results += vote + ":" + count + "  ";
+    results += vote + ":" + count + "   ";
   });
 
   return results;

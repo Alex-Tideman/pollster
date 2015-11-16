@@ -1,5 +1,6 @@
 var socket = io();
 
+var choices = document.getElementById('choices');
 var buttons = document.querySelectorAll('#choices button');
 var pollId = document.getElementById('poll-id');
 var endingTime = document.querySelector('#ending-time');
@@ -31,6 +32,10 @@ for (var i = 0; i < buttons.length; i++) {
 
 socket.on('voteCount:' + pollId.innerHTML, function (voteCount) {
     results.innerText = voteCount;
+});
+
+socket.on('endVote:' + pollId.innerHTML, function () {
+    choices.innerText = "Poll ended";
 });
 
 var voteMessage = document.querySelector('#vote-message');
