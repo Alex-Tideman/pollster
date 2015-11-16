@@ -2,8 +2,6 @@ const http = require('http');
 const express = require('express');
 const _ = require('lodash');
 const app = express();
-//const redis = require('redis');
-//const client = redis.createClient();
 const bodyParser = require('body-parser');
 const path = require('path');
 const md5 = require('md5');
@@ -30,46 +28,29 @@ app.get('/', function (req, res) {
 
 app.get('/poll/:id', function(req, res) {
   var poll = polls[req.params.id];
-  if(pollOver(poll["endingTime"])) {
+  var dateTime = poll["endingDate"] + " " + poll["endingTime"];
+  var date = new Date(dateTime);
+
+  if(pollOver(new Date(date.toUTCString()))) {
     res.render('pages/pollOver', { id: req.params.id, poll: poll});
   }
   else {
   res.render('pages/poll', { id: req.params.id, poll: poll});
   }
-
-
-  //var poll = client.hgetall(req.params.id, function(err,dbset) {
-  //  res.render('pages/poll',
-  //      {poll: {title: dbset.title,
-  //      response1: dbset.response1, response2:dbset.response2,
-  //      response3: dbset.response3, endingTime: dbset.endingTime }
-  //  });
-  //});
 });
 
 app.get('/admin/:id', function(req, res) {
   res.render('pages/admin', { id: req.params.id, poll: polls[req.params.id] });
-  //var poll = client.hgetall(req.params.id, function(err,dbset) {
-  //  res.render('pages/admin',
-  //      {poll: {title: dbset.title,
-  //        response1: dbset.response1, response2:dbset.response2,
-  //        response3: dbset.response3, endingTime: dbset.endingTime }
-  //      });
-  //});
 });
 
 app.post('/new-poll', function (req, res) {
   var id = md5(req.body.title);
   polls[id] = req.body;
   polls[id]["votes"] = {};
-  var date = polls[id]["endingTime"];
-  console.log(Date.parse(date));
+  var time = polls[id]["endingTime"];
+  var date = polls[id]["endingDate"];
+
   res.send("Title: " + req.body.title + "<br><a href=" + "/poll/" + id + ">Vistor Url</a><br><a href=" + "/admin/" + id + ">Admin Url</a>");
-  //client.hset(id, "title", req.body.title);
-  //client.hset(id, "response1", req.body.response1);
-  //client.hset(id, "response2", req.body.response2);
-  //client.hset(id, "response3", req.body.response3);
-  //client.hset(id, "endingTime", req.body.endingTime);
 });
 
 io.on('connection', function (socket) {
@@ -122,36 +103,18 @@ function countVotes(votes) {
   return results;
 }
 
-function pollOver (time) {
-  var currentTime = new Date();
-  var endingTime = new Date();
+function pollOver (dateTime) {
+  var endingTime = dateTime;
+  var time = new Date();
+  var currentTime = new Date(time.toUTCString());
 
-  if(time.includes('am')){
-    var splitTime = time.slice(0, -2).split(":");
-    var hour = parseInt(splitTime[0]);
-    var minute = parseInt(splitTime[1]);
-    endingTime.setHours(hour,minute);
-
-    if(currentTime.getTime() > endingTime.getTime()) {
-      return true
-    }
-    else {
-      return false
-    }
+  if(currentTime.getTime() > endingTime.getTime()) {
+    return true
   }
   else {
-    var splitTime = time.slice(0, -2).split(":");
-    var hour = parseInt(splitTime[0]);
-    var minute = parseInt(splitTime[1]);
-    endingTime.setHours(12 + hour,minute);
-
-    if (currentTime.getTime() > endingTime.getTime()) {
-      return true
-    }
-    else {
-      return false
-    }
+    return false
   }
 }
+
 
 module.exports = server;
