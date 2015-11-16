@@ -3,6 +3,7 @@ var socket = io();
 var choices = document.getElementById('choices');
 var buttons = document.querySelectorAll('#choices button');
 var pollId = document.getElementById('poll-id');
+var voteEnd = document.getElementById('vote-end');
 var endingTime = document.querySelector('#ending-time');
 var statusMessage = document.getElementById('status-message');
 var results = document.querySelector('#vote-results');
@@ -35,7 +36,8 @@ socket.on('voteCount:' + pollId.innerHTML, function (voteCount) {
 });
 
 socket.on('endVote:' + pollId.innerHTML, function () {
-    choices.innerText = "Poll ended";
+    choices.innerText = "";
+    voteEnd.innerText = "Poll ended";
 });
 
 var voteMessage = document.querySelector('#vote-message');
