@@ -106,14 +106,10 @@ function pollOver (dateTime) {
 
   var endingTime = new Date(dateTime);
   var currentTime = new Date();
-  console.log(endingTime);
-  console.log(currentTime);
-  console.log(new Date(currentTime.toUTCString()));
-  console.log(new Date(endingTime.toUTCString()));
   var endingSec = new Date(currentTime.toUTCString()).getTime();
   var currentSec = new Date(endingTime.toUTCString()).getTime();
 
-  if( endingSec > currentSec ) {
+  if( endingSec - 3600000 > currentSec ) {
     return true
   }
   else {
