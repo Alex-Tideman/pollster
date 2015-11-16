@@ -19,13 +19,13 @@
         <button><%= poll.response2 %></button>
         <button><%= poll.response3 %></button>
         <button><%= poll.response4 %></button>
+        <div id="vote-message"></div>
     </div>
-    <div id="vote-message"></div>
 </div>
+<div id="results"><h3>Results:</h3>
 <div id="vote-results"></div>
-<div id="vote-grapsh"><canvas id="myChart" width="400" height="400"></canvas></div>
+</div>
 
-<script src="Chart.js"></script>
 <script src=".././jquery.js"></script>
 <script src=".././application.js"></script>
 <script src="/socket.io/socket.io.js"></script>

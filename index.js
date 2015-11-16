@@ -86,6 +86,10 @@ io.on('connection', function (socket) {
         io.sockets.emit('voteCount:' + message[1], countVotes(votes));
         socket.emit('voteMessage', message[0]);
       }
+     else if (channel === 'viewResults:' + message) {
+      var votes = polls[message]['votes'];
+      io.sockets.emit('voteCount:' + message, countVotes(votes));
+    }
   });
 
   socket.on('disconnect', function(channel,message){

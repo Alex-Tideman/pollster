@@ -1,5 +1,26 @@
-<h1>Results for <%= poll.title %></h1>
-<h4><%= poll.response1 %> has 0 votes</h4>
-<h4><%= poll.response2 %> has 1 vote</h4>
-<h4><%= poll.response3 %> has 2 votes</h4>
+<!doctype html>
+<html>
+<head>
+    <title>Pollster</title>
+    <link rel="stylesheet" type="text/css" href=".././style.css" >
+</head>
+<body>
+<div class="info">
+    <div id="connection-count"></div>
+    <div id="status-message"></div>
+    <p id="poll-id"><%= id %></p>
+</div>
+<div class="container">
+    <h1><%= poll.title %></h1>
+    <h4>Poll ends at <span id="ending-time"><%= poll.endingTime %></span></h4>
+</div>
+<div id="results"><h3>Results:</h3>
+    <div id="vote-results"><button id="view-results">View Results</button></div>
+</div>
 
+<script src=".././jquery.js"></script>
+<script src=".././application.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src=".././admin.js"></script>
+</body>
+</html>

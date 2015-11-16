@@ -1,4 +1,8 @@
 /* Index */
+body {
+    background: #2b2b2b;
+    color:white;
+}
 .poll-form {
     margin-left:30%;
     margin-right:30%;
@@ -52,10 +56,15 @@
     font-size:20px;
 }
 
-#vote-results {
+#vote-message {
+    text-align: center;
+    color:orangered;
+}
+
+#results {
     margin-left:5%;
     margin-right:5%;
     padding:20px;
     color:white;
-    background:black;
+    background:orangered;
 }
