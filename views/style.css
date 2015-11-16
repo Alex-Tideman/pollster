@@ -72,11 +72,15 @@ body {
     margin:4%;
     height:50px;
     font-size:20px;
-    box-shadow: orangered 5px 3px 10px;
+    box-shadow: orangered 3px 2px 10px;
 }
 
 #vote-message {
     text-align: center;
+    color:orangered;
+}
+
+#vote-end {
     color:orangered;
 }
 

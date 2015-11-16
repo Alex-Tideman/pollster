@@ -72,7 +72,7 @@ io.on('connection', function (socket) {
       }
      else if (channel === 'viewResults:' + message) {
       var votes = polls[message]['votes'];
-      io.sockets.emit('voteCount:' + message, countVotes(votes));
+      socket.emit('voteCount:' + message, countVotes(votes));
     }
   });
 
