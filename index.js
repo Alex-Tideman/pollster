@@ -29,9 +29,8 @@ app.get('/', function (req, res) {
 app.get('/poll/:id', function(req, res) {
   var poll = polls[req.params.id];
   var dateTime = poll["endingDate"] + " " + poll["endingTime"];
-  var date = new Date(dateTime);
 
-  if(pollOver(new Date(date.toUTCString()))) {
+  if(pollOver(dateTime)) {
     res.render('pages/pollOver', { id: req.params.id, poll: poll});
   }
   else {
@@ -104,11 +103,11 @@ function countVotes(votes) {
 }
 
 function pollOver (dateTime) {
-  var endingTime = dateTime;
-  var time = new Date();
-  var currentTime = new Date(time.toUTCString());
 
-  if(currentTime.getTime() > endingTime.getTime()) {
+  var endingTime = new Date(dateTime);
+  var currentTime = new Date();
+
+  if(new Date(currentTime.toUTCString()).getTime() > new Date(endingTime.toUTCString()).getTime()) {
     return true
   }
   else {
