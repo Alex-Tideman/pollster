@@ -3,10 +3,17 @@ body {
     background: #2b2b2b;
     color:white;
 }
+
+#pollster {
+    color:orangered;
+    font-family:Courier New;
+    text-align:center;
+    font-size:48px;
+}
 .poll-form {
     margin-left:20%;
     margin-right:20%;
-    padding:50px;
+    padding:30px;
     background:black;
 }
 
@@ -21,11 +28,12 @@ body {
 }
 
 #submit {
-    height:100px;
+    height:60px;
     width:40%;
     background:orangered;
     float:right;
     margin-top:-15%;
+    font-family:Courier New;
 }
 
 .response {
@@ -46,6 +54,7 @@ body {
 }
 
 .container {
+    font-family:Courier New;
     margin-left:5%;
     margin-right:5%;
     padding:20px;
@@ -72,6 +81,7 @@ body {
 }
 
 #results {
+    font-family:Courier New;
     margin-left:5%;
     margin-right:5%;
     padding:20px;
