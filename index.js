@@ -38,18 +38,22 @@ app.get('/poll/:id', function(req, res) {
   }
 });
 
-app.get('/admin/:id', function(req, res) {
+app.get('/:adminId/:id', function(req, res) {
   res.render('pages/admin', { id: req.params.id, poll: polls[req.params.id] });
 });
 
 app.post('/new-poll', function (req, res) {
   var id = md5(req.body.title);
+  var adminId = md5(req.body.response1);
+
   polls[id] = req.body;
   polls[id]["votes"] = {};
+  polls[id]["admin-id"] = adminId;
+
   var time = polls[id]["endingTime"];
   var date = polls[id]["endingDate"];
 
-  res.send("Title: " + req.body.title + "<br><a href=" + "/poll/" + id + ">Vistor Url</a><br><a href=" + "/admin/" + id + ">Admin Url</a>");
+  res.send("<div class='container'>Title: " + req.body.title + "<br><a href=" + "/poll/" + id + ">Vistor Url</a><br><a href=" + "/" + adminId + "/" + id + ">Admin Url</a></div>");
 });
 
 io.on('connection', function (socket) {
