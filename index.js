@@ -1,6 +1,5 @@
 const http = require('http');
 const express = require('express');
-const _ = require('lodash');
 const app = express();
 const bodyParser = require('body-parser');
 const path = require('path');
