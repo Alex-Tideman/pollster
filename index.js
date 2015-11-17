@@ -4,7 +4,7 @@ const app = express();
 const bodyParser = require('body-parser');
 const path = require('path');
 const md5 = require('md5');
-
+const _ = require('lodash');
 const port = process.env.PORT || 3000;
 
 const server = http.createServer(app)

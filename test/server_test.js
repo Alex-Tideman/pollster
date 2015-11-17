@@ -61,7 +61,6 @@ it('should exist', function () {
             });
 
             request.get('http://localhost:3000/poll/74d010dd46e067d0280cb836cdded117', function (error, response) {
-                console.log(response.body);
                 assert(response.body.includes("Poll ends on 12/1/2015"));
                 assert(response.body.includes("Green"));
                 assert(response.body.includes("Blue"));
@@ -84,7 +83,6 @@ it('should exist', function () {
                 userTimezone: 420 };
 
             request.post('http://localhost:3000/new-poll', { form: poll }, function (error, response) {
-
             });
 
             request.get('http://localhost:3000/d382816a3cbeed082c9e216e7392eed1/74d010dd46e067d0280cb836cdded117', function (error, response) {
