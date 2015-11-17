@@ -106,7 +106,7 @@ function pollOver (dateTime,offset) {
 
   var currentTime = new Date();
   var endingTime = new Date(dateTime);
-  var offsetEndingTime = new Date(endingTime.setHours(endingTime.getHours() - (offset / 60)));
+  var offsetEndingTime = new Date(endingTime.setHours(endingTime.getHours() + (offset / 60)));
 
   if( currentTime.getTime() > endingTime.getTime()) {
     return true
