@@ -50,9 +50,6 @@ app.post('/new-poll', function (req, res) {
   polls[id]["votes"] = {};
   polls[id]["admin-id"] = adminId;
 
-  var time = polls[id]["endingTime"];
-  var date = polls[id]["endingDate"];
-
   res.send("<div class='container'>Title: " + req.body.title + "<br><a href=" + "/poll/" + id + ">Vistor Url</a><br><a href=" + "/" + adminId + "/" + id + ">Admin Url</a></div>");
 });
 
@@ -71,6 +68,7 @@ io.on('connection', function (socket) {
         socket.emit('voteMessage', message[0]);
       }
       else if (channel === 'endVote:' + message) {
+        polls[message]['endingDate'] = "01/01/2015";
         io.sockets.emit('endVote:' + message);
       }
      else if (channel === 'viewResults:' + message) {
