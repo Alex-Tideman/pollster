@@ -30,7 +30,7 @@ app.get('/poll/:id', function(req, res) {
   var poll = polls[req.params.id];
   var dateTime = poll["endingDate"] + " " + poll["endingTime"];
 
-  if(pollOver(dateTime)) {
+  if(pollOver(dateTime,poll["userTimezone"])) {
     res.render('pages/pollOver', { id: req.params.id, poll: poll});
   }
   else {
@@ -102,14 +102,13 @@ function countVotes(votes) {
   return results;
 }
 
-function pollOver (dateTime) {
+function pollOver (dateTime,offset) {
 
-  var endingTime = new Date(dateTime);
   var currentTime = new Date();
-  var endingUTC = new Date(endingTime.toUTCString());
-  var currentUTC = new Date(currentTime.toUTCString());
+  var endingTime = new Date(dateTime);
+  var offsetEndingTime = new Date(endingTime.setHours(endingTime.getHours() - (offset / 60)));
 
-  if( endingUTC - currentUTC < 0) {
+  if( currentTime.getTime() > endingTime.getTime()) {
     return true
   }
   else {
